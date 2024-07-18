@@ -1,0 +1,11 @@
+Error connecting to the database: Error: Max connection attempts exceeded
+    at Handshake.<anonymous> (E:\floon\dev\test dev bot falling Start\loaders\loadDatabase.js:33:28)
+    at Handshake.<anonymous> (E:\floon\dev\test dev bot falling Start\node_modules\mysql\lib\Connection.js:526:10)
+    at Handshake._callback (E:\floon\dev\test dev bot falling Start\node_modules\mysql\lib\Connection.js:488:16)
+    at Sequence.end (E:\floon\dev\test dev bot falling Start\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)
+    at Protocol.handleNetworkError (E:\floon\dev\test dev bot falling Start\node_modules\mysql\lib\protocol\Protocol.js:369:14)
+    at Connection._handleNetworkError (E:\floon\dev\test dev bot falling Start\node_modules\mysql\lib\Connection.js:418:18)
+    at Socket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
