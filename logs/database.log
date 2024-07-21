@@ -43,3 +43,5 @@
 [2024-07-22T00:24:54.673] [ERROR] default - [91m[Database] => Error connecting to the database. An error file has been created with the details: E:\floon\dev\test dev bot falling Start\libs\errors\database_connection_error_7-21-2024, 10-24-54 PM.log
 [2024-07-22T00:25:42.361] [INFO] default - [Database] => Initial connection established successfully!
 [2024-07-22T00:25:42.363] [ERROR] default - [91m[Database] => Error connecting to the database. An error file has been created with the details: E:\floon\dev\test dev bot falling Start\libs\errors\database_connection_error_7-21-2024, 10-25-42 PM.log
+[2024-07-22T00:28:03.533] [INFO] default - [38;5;82m[Database] => Initial connection established successfully!
+[2024-07-22T00:28:03.538] [ERROR] default - [91m[Database] => Error connecting to the database. An error file has been created with the details: E:\floon\dev\test dev bot falling Start\libs\errors\database_connection_error_7-21-2024, 10-28-03 PM.log
