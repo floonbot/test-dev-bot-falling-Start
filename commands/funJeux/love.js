@@ -57,7 +57,7 @@ ${progressBar}
                             const newResultEmbed = new EmbedBuilder()
                                 .setTitle("💖 Result Calculated!")
                                 .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true, size: 256, format: "png" }))
-                                .setColor("#00A705")
+                                .setColor("#FF69B4")
                                 .setDescription(`
 \`\`\`asciidoc
 • User 1   :: ${userYou.username}

@@ -1,8 +1,8 @@
 const { Client, IntentsBitField, Collection } = require("discord.js");
 const client = new Client({ intents: new IntentsBitField(3276799) });
-const loadCommands = require("./settings/loadCommands");
-const loadEvents = require("./settings/loadEvents");
-const loadInteractions = require("./settings/loadInteractions");
+const loadCommands = require("./connection/loadCommands");
+const loadEvents = require("./connection/loadEvents");
+const loadInteractions = require("./connection/loadInteractions");
 require('./libs/colors/js/globalConfig');
 require("dotenv").config();
 

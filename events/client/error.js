@@ -2,7 +2,6 @@ const { Events } = require("discord.js");
 const { createLogger, transports } = require('winston');
 const { resolve } = require("path");
 const fs = require("fs").promises;
-const colors = require("colors");
 
 const logger = createLogger({
     transports: [
@@ -30,6 +29,6 @@ module.exports = {
 
             await fs.writeFile(errorFilePath, `Erreur Discord.js : ${error.stack}`, 'utf-8');
 
-            console.error(colors.red(`Détails de l'erreur enregistrés dans : ${errorFilePath}`));
+            console.error(`${global.colors.text_light_red}Détails de l'erreur enregistrés dans : ${errorFilePath}`);
     }
 };

@@ -1,6 +1,5 @@
 const { Events, ActivityType } = require("discord.js");
-const loadDatabase = require("../../settings/loadDatabase");
-require("colors");
+const loadDatabase = require("../../connection/loadDatabase");
 
 module.exports = {
     name: Events.ClientReady,
@@ -13,9 +12,9 @@ module.exports = {
             await client.application.commands.set(client.commands.map(command => command.data));
             
             console.log("");
-            console.log(`[Bot] => ${client.user.username} is online`.green.bold);
+            console.log(`${global.colors.text_bold_light_green}[Bot] => ${client.user.username} is online`);
         } catch (error) {
-            console.error("[Bot] => Failed to load the database connection.".red, error);
+            console.error(`${global.colors.text_light_red}[Bot] => Failed to load the database connection.`);
         }
     }
 };

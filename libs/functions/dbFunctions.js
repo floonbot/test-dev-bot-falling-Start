@@ -1,6 +1,5 @@
 const { promises: fsPromises } = require("fs");
 const { resolve } = require("path");
-require("colors");
 
 const DATABASE = process.env.DATABASE;
 
@@ -12,13 +11,13 @@ async function getTablesWithColumns(db, tablesLoaded, indent = 0) {
             } else {
                 for (const table of result) {
                     const tableName = table[`Tables_in_${DATABASE}`];
-                    console.log(`${"".repeat(indent)}[Table] => ${tableName}`.blue.reset);
+                    console.log(`${global.colors.text_light_blue}[${"".repeat(indent)}[Table] => ${tableName}`);
                     tablesLoaded.push(tableName);
 
                     try {
                         const columns = await getColumns(db, tableName, indent + 1);
                         for (const column of columns) {
-                            console.log(`${"".repeat(indent + 1)}[Colonne] ${column.Field}`.gray.reset);
+                            console.log(`${global.colors.text_light_gray}[${"".repeat(indent + 1)}[Colonne] ${column.Field}`);
                         }
                     } catch (columnError) {
                         await handleColumnError(tableName, columnError);
@@ -51,8 +50,8 @@ async function handleColumnError(tableName, error) {
     await fsPromises.mkdir(errorDir, { recursive: true });
 
     await fsPromises.writeFile(errorFilePath, `Error loading columns for table ${tableName}: ${error.stack}`, 'utf-8');
-    console.log("[columns] =>".red.reset, `Columns for table ${tableName} not loaded`);
-    console.error("[columns] =>".red.reset, `Error loading columns for table ${tableName}. An error file has been created with the details: ${errorFilePath}`);
+    console.log(`${global.colors.text_light_red}[[columns] =>`, `Columns for table ${tableName} not loaded`);
+    console.error(`${global.colors.text_light_green.bold}[columns] =>`, `Error loading columns for table ${tableName}. An error file has been created with the details: ${errorFilePath}`);
 }
 
 module.exports = {

@@ -1,3 +1,4 @@
+
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const { calculate } = require("../../libs/functions/math");
 
