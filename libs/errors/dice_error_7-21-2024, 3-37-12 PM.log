@@ -1,0 +1,11 @@
+Error loading command from file dice.js in directory funAleatoire: ReferenceError: s is not defined
+    at Object.<anonymous> (E:\floon\dev\test dev bot falling Start\commands\funAleatoire\dice.js:3:1)
+    at Module._compile (node:internal/modules/cjs/loader:1358:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1416:10)
+    at Module.load (node:internal/modules/cjs/loader:1208:32)
+    at Module._load (node:internal/modules/cjs/loader:1024:12)
+    at Module.require (node:internal/modules/cjs/loader:1233:19)
+    at require (node:internal/modules/helpers:179:18)
+    at module.exports (E:\floon\dev\test dev bot falling Start\loaders\loadCommands.js:19:45)
+    at E:\floon\dev\test dev bot falling Start\main.js:13:11
+    at Object.<anonymous> (E:\floon\dev\test dev bot falling Start\main.js:18:3)

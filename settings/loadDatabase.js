@@ -2,8 +2,7 @@ const mysql = require("mysql");
 const { promises: fsPromises } = require("fs");
 const { resolve } = require("path");
 require("colors");
-const { getTablesWithColumns, handleColumnError } = require("../fonctions/dbFunctions");
-const { magenta } = require("colors");
+const { getTablesWithColumns, handleColumnError } = require("../libs/functions/dbFunctions");
 
 const HOST = process.env.HOST;
 const USER = process.env.USER;
@@ -57,7 +56,7 @@ module.exports = async () => {
         if (error.message.includes("SHOW COLUMNS")) {
             await handleColumnError("unknown", error);
         } else {
-            const errorDir = resolve("./errors/");
+            const errorDir = resolve("./libs/errors/");
             const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
             const errorFilePath = resolve(`${errorDir}/database_connection_error_${currentDate}.log`);
 

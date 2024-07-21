@@ -1,5 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require('discord.js');
-const { rollDice } = require('../../fonctions/math');
+const { rollDice } = require('../../libs/functions/math');
 
 module.exports = {
 

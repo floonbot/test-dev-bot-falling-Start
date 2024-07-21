@@ -1,0 +1,9 @@
+Erreur Discord.js : DiscordAPIError[50035]: Invalid Form Body
+data.content[BASE_TYPE_MAX_LENGTH]: Must be 2000 or fewer in length.
+    at handleErrors (E:\floon\dev\test dev bot falling Start\node_modules\@discordjs\rest\dist\index.js:730:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BurstHandler.runRequest (E:\floon\dev\test dev bot falling Start\node_modules\@discordjs\rest\dist\index.js:835:23)
+    at async _REST.request (E:\floon\dev\test dev bot falling Start\node_modules\@discordjs\rest\dist\index.js:1278:22)
+    at async ChatInputCommandInteraction.reply (E:\floon\dev\test dev bot falling Start\node_modules\discord.js\src\structures\interfaces\InteractionResponses.js:114:5)
+    at async Object.run (E:\floon\dev\test dev bot falling Start\commands\admin\colors.js:16:9)
+    at async Object.run (E:\floon\dev\test dev bot falling Start\events\client\interactionCreate.js:13:17)

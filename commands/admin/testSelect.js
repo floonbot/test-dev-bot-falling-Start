@@ -11,6 +11,10 @@ module.exports = {
 
     async run(interaction) {
 
+        if (interaction.user.id !== process.env.ownerId) {
+            return interaction.reply({ content: "Vous n'avez pas la permission d'utiliser cette commande.", ephemeral: true });
+        }
+
         const select = new StringSelectMenuBuilder()
             .setCustomId('starter')
             .setPlaceholder('Make a choice...')

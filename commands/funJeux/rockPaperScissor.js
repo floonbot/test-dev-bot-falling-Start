@@ -1,5 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { getChoiceBot, determineResult } = require('../../fonctions/pfc')
+const { getChoiceBot, determineResult } = require('../../libs/functions/pfc')
 
 module.exports = {
 

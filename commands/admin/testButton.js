@@ -11,6 +11,11 @@ module.exports = {
 
    async run(interaction) {
 
+    
+    if (interaction.user.id !== process.env.ownerId) {
+        return interaction.reply({ content: "Vous n'avez pas la permission d'utiliser cette commande.", ephemeral: true });
+    }
+
         const testButton = new ButtonBuilder()
             .setCustomId('pong')
             .setEmoji("🏓")

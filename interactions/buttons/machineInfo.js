@@ -1,5 +1,5 @@
 const { ComponentType, ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder } = require("discord.js");
-const { formatBytesMachineInfo } = require("../../fonctions/allFormatBytes");
+const { formatBytesMachineInfo } = require("../../libs/functions/allFormatBytes");
 const si = require('systeminformation');
 
 module.exports = {

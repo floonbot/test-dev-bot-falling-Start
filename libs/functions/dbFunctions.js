@@ -44,7 +44,7 @@ async function getColumns(db, tableName, indent = 0) {
 }
 
 async function handleColumnError(tableName, error) {
-    const errorDir = resolve("./errors/");
+    const errorDir = resolve("./libs/errors/");
     const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
     const errorFilePath = resolve(`${errorDir}/${tableName}_columns_error_${currentDate}.log`);
 

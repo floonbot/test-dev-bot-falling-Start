@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder} = require("discord.js");
-const { generateRandomNumber } = require('../../fonctions/math');
+const { generateRandomNumber } = require('../../libs/functions/math');
 
 module.exports = {
     data: new SlashCommandBuilder()

@@ -4,7 +4,7 @@ require("moment-duration-format");
 const ms = require("ms");
 const os = require("node:os");
 const osu = require("node-os-utils");
-const { formatBytesStatistics } = require("../../fonctions/allFormatBytes");
+const { formatBytesStatistics } = require("../../libs/functions/allFormatBytes");
 
 
 module.exports = {

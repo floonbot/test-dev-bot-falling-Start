@@ -22,7 +22,7 @@ module.exports = async (client) => {
 
                     count++;
                 } catch (error) {
-                    const errorDir = resolve("./errors/");
+                    const errorDir = resolve("./libs/errors/");
                     const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
                     const testFilePath = resolve(`${errorDir}/${file.split('.')[0]}_error_${currentDate}.log`);
 
@@ -37,7 +37,7 @@ module.exports = async (client) => {
 
         console.log("[events] =>".yellow.reset, `${count} events loaded`);
     } catch (error) {
-        const errorDir = resolve("./errors/");
+        const errorDir = resolve("./libs/errors/");
         const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
         const testFilePath = resolve(`${errorDir}/events_error_${currentDate}.log`);
 

@@ -19,7 +19,7 @@ module.exports = async (client) => {
                     count++;
                     console.log("[Interactions] =>".cyan.reset, `Interaction ${interaction.name, dir} loaded from file ${file}`);
                 } catch (error) {
-                    const errorDir = resolve("./errors/");
+                    const errorDir = resolve("./libs/errors/");
                     const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
                     const testFilePath = resolve(`${errorDir}/${file.split('.')[0]}_error_${currentDate}.log`);
 
@@ -34,7 +34,7 @@ module.exports = async (client) => {
 
         console.log("[interactions] =>".cyan.reset, `${count} interactions loaded`);
     } catch (error) {
-        const errorDir = resolve("./errors/");
+        const errorDir = resolve("./libs/errors/");
         const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
         const testFilePath = resolve(`${errorDir}/interactions_error_${currentDate}.log`);
 

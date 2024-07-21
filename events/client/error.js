@@ -16,7 +16,7 @@ module.exports = {
 
         console.error(colors.red('Une erreur Discord.js s\'est produite.'));
 
-            const errorDir = resolve("./errors/");
+            const errorDir = resolve("./libs/errors/");
 
             const errorName = error.name || 'UnknownError';
 
