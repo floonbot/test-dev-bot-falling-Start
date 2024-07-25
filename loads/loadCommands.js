@@ -4,14 +4,12 @@ const log4js = require("log4js");
 
 log4js.configure({
     appenders: {
-        file: { type: 'file', filename: 'logs/commands.log' },
         console: { type: 'console' }
     },
     categories: {
-        default: { appenders: ['file', 'console'], level: 'debug' }
+        default: { appenders: ['console'], level: 'debug' }
     }
 });
-
 const logger = log4js.getLogger();
 
 module.exports = async (client) => {
@@ -32,16 +30,16 @@ module.exports = async (client) => {
                         const command = require(filePath);
                         client.commands.set(command.data.name, command);
                         count++;
-                        logger.info(`[Commands] => command/${dir}/${file} loaded`);
+                        logger.info(`${global.colors.text_bright_green}[Command]`,`${global.colors.text_white}=> command/${dir}/${file} loaded`);
                     } catch (error) {
-                        const errorDir = resolve("./libs/errors/");
+                        const errorDir = resolve("./libs/errors/commands/");
                         const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
-                        const testFilePath = resolve(`${errorDir}/${file.split('.')[0]}_error_${currentDate}.log`);
+                        const testFilePath = resolve(`${errorDir}/${file.split('.')[0]}_error_${currentDate}.txt`);
 
                         await mkdir(errorDir, { recursive: true });
 
                         await writeFile(testFilePath, `Error loading command/${dir}/${file} : ${error.stack}`, 'utf-8');
-                        logger.error(`${global.colors.text_bright_red}[Commands] => command/${dir}/${file.split('.')[0]}.js not loaded`);
+                        logger.error(`${global.colors.text_bright_red}[Command]`,`${global.colors.text_white}=> command/${dir}/${file.split('.')[0]}.js not loaded`);
                         logger.error(`${global.colors.text_bright_red}Error loading command from file ${file} in directory ${dir}. A test file has been created with the error details: ${testFilePath}`);
                         errorCount++;
                     }
@@ -50,18 +48,18 @@ module.exports = async (client) => {
         }
 
         if (errorCount > 0) {
-            logger.warn(`${global.colors.text_light_red}[Commands] => ${errorCount} commands not loaded`);
+            logger.warn(`${global.colors.text_light_red}[Command] => ${errorCount} command not loaded`);
         }
     } catch (error) {
-        const errorDir = resolve("./libs/errors/");
+        const errorDir = resolve("./libs/errors/commands/");
         const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
-        const testFilePath = resolve(`${errorDir}/commands_error_${currentDate}.log`);
+        const testFilePath = resolve(`${errorDir}/command_error_${currentDate}.txt`);
 
         await mkdir(errorDir, { recursive: true });
 
-        await writeFile(testFilePath, `Error loading commands: ${error.stack}`, 'utf-8');
-        logger.fatal(`[Commands] => Error loading commands. A test file has been created with the error details: ${testFilePath}`);
+        await writeFile(testFilePath, `Error loading command: ${error.stack}`, 'utf-8');
+        logger.fatal(`[Command] => Error loading command. A test file has been created with the error details: ${testFilePath}`);
     }
 
-    logger.info(`${global.colors.text_light_green}[Commands] => ${count} commands loaded`);
+    logger.info(`${global.colors.text_light_green}[Command] => ${count} command loaded`);
 };

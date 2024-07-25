@@ -1,5 +1,6 @@
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { getChoiceBot, determineResult } = require('../../libs/functions/pfc')
+const { determineResult } = require('../../libs/functions/functionDetermineResultRockPaperScissors')
+const {  getBotChoiceRockPaperScissors } = require('../../libs/functions/functiongetBotChoiceRockPaperScissors')
 
 module.exports = {
 
@@ -23,7 +24,7 @@ module.exports = {
     async run(interaction) {
 
         const userChoice = interaction.options.getString("choice");
-        const botChoice = getChoiceBot();
+        const botChoice = getBotChoiceRockPaperScissors();
         const result = determineResult(userChoice, botChoice);
 
 
@@ -41,7 +42,7 @@ module.exports = {
             .setFooter({ text: `RPS initiated by ${interaction.user.tag}`, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, size: 128, format: "png" })}` })
             .setTimestamp();
 
-       await interaction.reply(
+        await interaction.reply(
             {
                 embeds: [EmbedRPS],
             }

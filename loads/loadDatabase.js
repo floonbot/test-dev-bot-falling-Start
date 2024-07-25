@@ -2,17 +2,17 @@ const mysql = require("mysql2/promise");
 const { mkdir, writeFile } = require("fs-extra");
 const { resolve } = require("path");
 const log4js = require("log4js");
-const { getTablesWithColumns, handleColumnError } = require("../libs/functions/dbFunctions");
+const { getTablesWithColumns, handleColumnError } = require("../libs/functions/databaseFunctions");
 
 log4js.configure({
     appenders: {
-        file: { type: 'file', filename: 'logs/database.log' },
         console: { type: 'console' }
     },
     categories: {
-        default: { appenders: ['file', 'console'], level: 'debug' }
+        default: { appenders: ['console'], level: 'debug' }
     }
 });
+
 
 const logger = log4js.getLogger();
 
@@ -43,7 +43,7 @@ async function connectToDatabase(retries = 0) {
             await new Promise(resolve => setTimeout(resolve, RETRY_INTERVAL));
             return connectToDatabase(retries + 1);
         } else if (retries >= MAX_RETRIES) {
-            logger.error(`${global.colors.text_light_red}[Database] => All ${MAX_RETRIES} attempts to connect to the database have failed.`);
+            logger.error(`${global.colors.text_light_red}[Database]`,`${global.colors.text_white}=> All ${MAX_RETRIES} attempts to connect to the database have failed.`);
             throw new Error("Max connection attempts exceeded");
         } else {
             throw err;
@@ -62,9 +62,9 @@ module.exports = async () => {
         if (error.message.includes("SHOW COLUMNS")) {
             await handleColumnError("unknown", error);
         } else {
-            const errorDir = resolve("./libs/errors/");
+            const errorDir = resolve("./libs/errors/databases/");
             const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
-            const errorFilePath = resolve(`${errorDir}/database_connection_error_${currentDate}.log`);
+            const errorFilePath = resolve(`${errorDir}/database_connection_error_${currentDate}.txt`);
 
             await mkdir(errorDir, { recursive: true });
 

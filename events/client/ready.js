@@ -1,5 +1,17 @@
 const { Events, ActivityType } = require("discord.js");
-const loadDatabase = require("../../connection/loadDatabase");
+const loadDatabase = require("../../loads/loadDatabase");
+const log4js = require("log4js");
+
+log4js.configure({
+    appenders: {
+        console: { type: 'console' }
+    },
+    categories: {
+        default: { appenders: ['console'], level: 'debug' }
+    }
+});
+
+const logger = log4js.getLogger();
 
 module.exports = {
     name: Events.ClientReady,
@@ -8,13 +20,12 @@ module.exports = {
             const db = await loadDatabase();
             client.db = db;
 
-            client.user.setActivity("à Valorant", { type: ActivityType.Playing });
+            client.user.setActivity("playing Valorant", { type: ActivityType.Playing });
             await client.application.commands.set(client.commands.map(command => command.data));
-            
-            console.log("");
-            console.log(`${global.colors.text_bold_light_green}[Bot] => ${client.user.username} is online`);
+
+            logger.info(`[Bot] => ${client.user.username} is online`);
         } catch (error) {
-            console.error(`${global.colors.text_light_red}[Bot] => Failed to load the database connection.`);
+            logger.error(`[Bot] => Failed to load the database connection: ${error.stack}`);
         }
     }
 };

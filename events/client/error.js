@@ -1,34 +1,32 @@
 const { Events } = require("discord.js");
-const { createLogger, transports } = require('winston');
+const { createLogger, transports, format } = require('winston');
 const { resolve } = require("path");
 const fs = require("fs").promises;
 
 const logger = createLogger({
+    format: format.combine(
+        format.timestamp(),
+        format.printf(({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`)
+    ),
     transports: [
-        new transports.Console(),
+        new transports.Console()
     ],
 });
 
 module.exports = {
     name: Events.Error,
     async run(client, error) {
+        logger.error(`Une erreur Discord.js s'est produite: ${error.stack}`);
 
-        console.error(colors.red('Une erreur Discord.js s\'est produite.'));
+        const errorDir = resolve("./libs/errors/api/");
+        const errorName = error.name || 'UnknownError';
+        const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
+        const errorFileName = `${errorName}_error_${currentDate}.txt`;
+        const errorFilePath = resolve(`${errorDir}/${errorFileName}`);
 
-            const errorDir = resolve("./libs/errors/");
+        await fs.mkdir(errorDir, { recursive: true });
+        await fs.writeFile(errorFilePath, `Erreur Discord.js : ${error.stack}`, 'utf-8');
 
-            const errorName = error.name || 'UnknownError';
-
-            const currentDate = new Date().toLocaleString("en-US", { timeZone: "UTC" }).replace(/[\/:]/g, "-");
-
-            const errorFileName = `${errorName}_error_${currentDate}.log`;
-            
-            const errorFilePath = resolve(`${errorDir}/${errorFileName}`);
-
-            await fs.mkdir(errorDir, { recursive: true });
-
-            await fs.writeFile(errorFilePath, `Erreur Discord.js : ${error.stack}`, 'utf-8');
-
-            console.error(`${global.colors.text_light_red}Détails de l'erreur enregistrés dans : ${errorFilePath}`);
+        logger.error(`Détails de l'erreur enregistrés dans : ${errorFilePath}`);
     }
 };

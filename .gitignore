@@ -2,3 +2,5 @@
 node_modules
 Charge.txt
 package-lock.json
+libs/errors
+libs/logs

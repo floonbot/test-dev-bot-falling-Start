@@ -2,7 +2,6 @@ const { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } = require("discor
 const { getInfoFromName } = require('mal-scraper');
 
 module.exports = {
-
     data: new SlashCommandBuilder()
         .setName("anime-search")
         .setDescription("Information about the anime.")
@@ -15,41 +14,45 @@ module.exports = {
                 .setRequired(true)
         ),
 
-
-
     async run(interaction) {
+       
+            const animeName = interaction.options.getString("anime");
+            const animeInfo = await getInfoFromName(animeName);
 
-        const nomAnime = interaction.options.getString("anime");
+            if (!animeInfo) {
+                interaction.reply("No information found for the specified anime.");
+                return;
+            }
 
-        const { title, episodes, duration, score, genres, picture, studios, synopsis, status, trailer } = await getInfoFromName(nomAnime)
-        const files = new AttachmentBuilder(picture, { name: `picture.png` });
+            const { title, episodes, duration, score, genres, picture, studios, synopsis, status, trailer } = animeInfo;
+            const file = new AttachmentBuilder(picture, { name: 'picture.png' });
 
-        const EmbedAnime = new EmbedBuilder()
-            .setTitle(`-🎬 The title of the anime ${title}`)
-            .setColor("#00A705")
-            .setDescription(`
+            const embed = new EmbedBuilder()
+                .setTitle(`🎬 Anime: ${title}`)
+                .setColor("#00A705")
+                .setDescription(`
 \`\`\`asciidoc
 • Number of episodes :: ${episodes}
 • Average episode duration :: ${duration}
 • Score :: ${score}
 • Studio :: ${studios}
-• Genre :: ${genres}
-
-• Synopsis :: 
-${synopsis}
-
+• Genre :: ${genres.join(", ")}
 • Status :: ${status}
 \`\`\`
-`)
-            .setThumbnail(`attachment:\/\/${files.name}`)
-            .setFooter({ text: `Command used by ${interaction.user.tag}`, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, size: 128, format: "png" })}` })
-            .setTimestamp();
+• Synopsis :: 
+${synopsis}`)
+                .setThumbnail(`attachment://picture.png`)
+                .setFooter({ text: `Requested by ${interaction.user.tag}`, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, size: 128, format: "png" })}` })
+                .setTimestamp();
 
-        await interaction.reply({
-            embeds: [EmbedAnime],
-            files: [files]
-        });
-        await interaction.followUp(
-            `Here is the trailer : ${trailer}`);
+            await interaction.reply({
+                embeds: [embed],
+                files: [file]
+            });
+
+            if (trailer) {
+                interaction.followUp(`Here is the trailer: ${trailer}`);
+            }
+       
     }
-}
+};

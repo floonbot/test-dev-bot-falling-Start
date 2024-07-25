@@ -1,5 +1,5 @@
 const { ComponentType, ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder } = require("discord.js");
-const { generateRandomNumber } = require('../../libs/functions/math');
+const { generateRandomNumber } = require('../../libs/functions/functionGenerateRandomNumber');
 
 module.exports = {
 

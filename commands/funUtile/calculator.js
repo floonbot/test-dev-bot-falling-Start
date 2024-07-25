@@ -1,6 +1,5 @@
-
 const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { calculate } = require("../../libs/functions/math");
+const { calculate } = require("../../libs/functions/functionCalculate");
 
 module.exports = {
 

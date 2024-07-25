@@ -4,33 +4,30 @@ require("moment-duration-format");
 const ms = require("ms");
 const os = require("node:os");
 const osu = require("node-os-utils");
-const { formatBytesStatistics } = require("../../libs/functions/allFormatBytes");
-
+const { formatBytesStatistics } = require("../../libs/functions/functionFormatBytesStatistics");
 
 module.exports = {
-
     name: "refresh-statistics",
     type: ComponentType.Button,
 
     async run(interaction) {
+        
+            const durée = moment.duration(interaction.client.uptime).format("**D [D], H [H], m [M], s [S]**");
+            const cpuUsage = await osu.cpu.usage();
 
-        const durée = moment.duration(interaction.client.uptime).format("**D [D], H [H], m [M], s [S]**");
-        const cpuUsage = await osu.cpu.usage();
+            const button = new ButtonBuilder()
+                .setCustomId('refresh-statistics')
+                .setEmoji("🔁")
+                .setLabel('Refresh')
+                .setStyle(ButtonStyle.Primary);
 
-        const row = new ButtonBuilder()
-            .setCustomId('refresh-statistics')
-            .setEmoji("🔁")
-            .setLabel('Refresh')
-            .setStyle(ButtonStyle.Primary);
+            const actionRow = new ActionRowBuilder().addComponents(button);
 
-        const actionRow = new ActionRowBuilder()
-            .addComponents(row);
-
-        const embed = new EmbedBuilder()
-            .setTitle(`-\ud83d\udcbb  System Statistics`)
-            .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true, size: 256, format: "png" }))
-            .setColor("#00A705")
-            .setDescription(`
+            const embed = new EmbedBuilder()
+                .setTitle(`📊 System Statistics`)
+                .setThumbnail(interaction.user.displayAvatarURL({ dynamic: true, size: 256, format: "png" }))
+                .setColor("#00A705")
+                .setDescription(`
 \`\`\`asciidoc
 • Platform - Arch :: ${process.platform} - ${process.arch}
 • Bot Uptime :: ${durée}
@@ -41,15 +38,11 @@ module.exports = {
 • Node.js Version :: ${process.version}
 • Discord.js Version :: v${version}
 \`\`\`
-            `)
-            .setFooter({ text: `Command used by ${interaction.user.tag}`, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, size: 128, format: "png" })}` })
-            .setTimestamp();
+                `)
+                .setFooter({ text: `Command used by ${interaction.user.tag}`, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, size: 128, format: "png" })}` })
+                .setTimestamp();
 
-        await interaction.message.edit(
-            {
-                embeds: [embed],
-                components: [actionRow]
-            });
-        await interaction.deferUpdate();
+            await interaction.message.edit({ embeds: [embed], components: [actionRow] });
+            await interaction.deferUpdate();
     }
 };

@@ -13,12 +13,12 @@ module.exports = {
                 .setRequired(true)
         ),
 
-
     async run(interaction) {
+        const text = interaction.options.getString("emojify");
 
-        let text = interaction.options.getString("emojify");
-
-        if (!interaction.options.getString("emojify")) return interaction.reply({ content: "Please enter valid text!", ephemeral: true });
+        if (!text) {
+            return interaction.reply({ content: "Please enter valid text!", ephemeral: true });
+        }
 
         const specialCodes = {
             '0': ':zero:',
@@ -38,25 +38,10 @@ module.exports = {
             ' ': '   '
         };
 
-        let emojifiedText = ''
-
-        for (let i = 0; i < text.length; i++) {
-
-            const letter = text[i].toLowerCase();
-
-            if (/[a-z]/g.test(letter)) {
-
-                emojifiedText += `:regional_indicator_${letter}:`
-
-            } else if (specialCodes[letter]) {
-
-                emojifiedText += specialCodes[letter]
-
-            } else {
-
-                emojifiedText += letter
-            }
-        };
+        const emojifiedText = text.split('').map(char => {
+            const lowerChar = char.toLowerCase();
+            return /[a-z]/.test(lowerChar) ? `:regional_indicator_${lowerChar}:` : (specialCodes[lowerChar] || char);
+        }).join('');
 
         interaction.reply(emojifiedText);
     }

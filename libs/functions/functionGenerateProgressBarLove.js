@@ -9,4 +9,4 @@ function generateProgressBarLove(value) {
     return `${filled}${empty} ${value}%`;
 }
 
-module.exports = { generateProgressBarLove}
+module.exports = { generateProgressBarLove };
