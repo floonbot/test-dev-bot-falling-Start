@@ -2,6 +2,12 @@ const translate = require('@iamtraction/google-translate');
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
+    name: 'translation',
+    description: 'Start translating text',
+    category: 'Utile',
+    dmPermission: false,
+    defaultMemberPermissions: null,
+    nsfw: false,
     data: new SlashCommandBuilder()
         .setName("translation")
         .setDescription("Start translating text")
@@ -24,12 +30,25 @@ module.exports = {
                 )
         ),
 
-    async run(interaction) {
-        const text = interaction.options.getString("texttranslation");
-        const language = interaction.options.getString("language");
+    async run(interactionOrMessage, args) {
+        const text = interactionOrMessage.options ? interactionOrMessage.options.getString("texttranslation") : args.join(" ");
+        const language = interactionOrMessage.options ? interactionOrMessage.options.getString("language") : args[1];
+
+        if (!text || !language) {
+            const response = "You need to provide text and a language. Use `.translation <text> <language>`.";
+            if (interactionOrMessage.reply) {
+                return interactionOrMessage.reply(response);
+            } else {
+                return interactionOrMessage.channel.send(response);
+            }
+        }
 
         const translated = await translate(text, { to: language });
-        interaction.reply(translated.text);
 
+        if (interactionOrMessage.reply) {
+            interactionOrMessage.reply(translated.text);
+        } else {
+            interactionOrMessage.channel.send(translated.text);
+        }
     }
 };

@@ -2,6 +2,12 @@ const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 const flip = require('flip-text');
 
 module.exports = {
+    name: 'flip',
+    description: 'Flip the provided text.',
+    category: 'Fun',
+    dmPermission: false,
+    defaultMemberPermissions: null,
+    nsfw: false,
     data: new SlashCommandBuilder()
         .setName("flip")
         .setDescription("Flip the provided text.")
@@ -14,8 +20,18 @@ module.exports = {
                 .setRequired(true)
         ),
 
-    async run(interaction) {
-        const text = interaction.options.getString("textflip");
+    async run(interactionOrMessage, args) {
+        const text = interactionOrMessage.options ? interactionOrMessage.options.getString("textflip") : args.join(" ");
+
+        if (!text) {
+            const response = "You need to provide text to flip. Use `.flip <your text>`.";
+            if (interactionOrMessage.reply) {
+                return interactionOrMessage.reply(response);
+            } else {
+                return interactionOrMessage.channel.send(response);
+            }
+        }
+
         const flippedText = flip(text);
 
         const EmbedFlip = new EmbedBuilder()
@@ -26,9 +42,13 @@ module.exports = {
 ${flippedText}
 \`\`\`
             `)
-            .setFooter({ text: `Requested by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true, size: 128, format: "png" }) })
+            .setFooter({ text: `Requested by ${interactionOrMessage.user ? interactionOrMessage.user.tag : interactionOrMessage.author.tag}`, iconURL: `${interactionOrMessage.user ? interactionOrMessage.user.displayAvatarURL({ dynamic: true, size: 128, format: "png" }) : interactionOrMessage.author.displayAvatarURL({ dynamic: true, size: 128, format: "png" })}` })
             .setTimestamp();
 
-        interaction.reply({ embeds: [EmbedFlip] });
+        if (interactionOrMessage.reply) {
+            interactionOrMessage.reply({ embeds: [EmbedFlip] });
+        } else {
+            interactionOrMessage.channel.send({ embeds: [EmbedFlip] });
+        }
     }
 };

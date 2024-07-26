@@ -1,6 +1,7 @@
 const figlet = require("figlet");
 const { SlashCommandBuilder } = require("discord.js");
 
+
 module.exports = {
     name: 'art-text',
     description: 'Create the text art.',
@@ -20,6 +21,7 @@ module.exports = {
                 .setRequired(true)
         ),
     async run(interactionOrMessage, args) {
+		
         const text = interactionOrMessage.options ? interactionOrMessage.options.getString("text") : args.join(" ");
 
         if (!text) {

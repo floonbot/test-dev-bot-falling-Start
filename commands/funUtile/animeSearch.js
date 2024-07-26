@@ -2,6 +2,12 @@ const { AttachmentBuilder, EmbedBuilder, SlashCommandBuilder } = require("discor
 const { getInfoFromName } = require('mal-scraper');
 
 module.exports = {
+    name: 'anime-search',
+    description: 'Information about the anime.',
+    category: 'Utile',
+    dmPermission: false,
+    defaultMemberPermissions: null,
+    nsfw: false,
     data: new SlashCommandBuilder()
         .setName("anime-search")
         .setDescription("Information about the anime.")
@@ -14,23 +20,36 @@ module.exports = {
                 .setRequired(true)
         ),
 
-    async run(interaction) {
-       
-            const animeName = interaction.options.getString("anime");
-            const animeInfo = await getInfoFromName(animeName);
+    async run(interactionOrMessage, args) {
+        const animeName = interactionOrMessage.options ? interactionOrMessage.options.getString("anime") : args.join(" ");
 
-            if (!animeInfo) {
-                interaction.reply("No information found for the specified anime.");
-                return;
+        if (!animeName) {
+            const response = "You need to provide an anime name. Use `.anime-search <anime name>`.";
+            if (interactionOrMessage.reply) {
+                return interactionOrMessage.reply(response);
+            } else {
+                return interactionOrMessage.channel.send(response);
             }
+        }
 
-            const { title, episodes, duration, score, genres, picture, studios, synopsis, status, trailer } = animeInfo;
-            const file = new AttachmentBuilder(picture, { name: 'picture.png' });
+        const animeInfo = await getInfoFromName(animeName);
 
-            const embed = new EmbedBuilder()
-                .setTitle(`🎬 Anime: ${title}`)
-                .setColor("#00A705")
-                .setDescription(`
+        if (!animeInfo) {
+            const response = "No information found for the specified anime.";
+            if (interactionOrMessage.reply) {
+                return interactionOrMessage.reply(response);
+            } else {
+                return interactionOrMessage.channel.send(response);
+            }
+        }
+
+        const { title, episodes, duration, score, genres, picture, studios, synopsis, status, trailer } = animeInfo;
+        const file = new AttachmentBuilder(picture, { name: 'picture.png' });
+
+        const embed = new EmbedBuilder()
+            .setTitle(`🎬 Anime: ${title}`)
+            .setColor("#00A705")
+            .setDescription(`
 \`\`\`asciidoc
 • Number of episodes :: ${episodes}
 • Average episode duration :: ${duration}
@@ -41,18 +60,22 @@ module.exports = {
 \`\`\`
 • Synopsis :: 
 ${synopsis}`)
-                .setThumbnail(`attachment://picture.png`)
-                .setFooter({ text: `Requested by ${interaction.user.tag}`, iconURL: `${interaction.user.displayAvatarURL({ dynamic: true, size: 128, format: "png" })}` })
-                .setTimestamp();
+            .setThumbnail(`attachment://picture.png`)
+            .setFooter({ text: `Requested by ${interactionOrMessage.user ? interactionOrMessage.user.tag : interactionOrMessage.author.tag}`, iconURL: `${interactionOrMessage.user ? interactionOrMessage.user.displayAvatarURL({ dynamic: true, size: 128, format: "png" }) : interactionOrMessage.author.displayAvatarURL({ dynamic: true, size: 128, format: "png" })}` })
+            .setTimestamp();
 
-            await interaction.reply({
-                embeds: [embed],
-                files: [file]
-            });
+        if (interactionOrMessage.reply) {
+            interactionOrMessage.reply({ embeds: [embed], files: [file] });
+        } else {
+            interactionOrMessage.channel.send({ embeds: [embed], files: [file] });
+        }
 
-            if (trailer) {
-                interaction.followUp(`Here is the trailer: ${trailer}`);
+        if (trailer) {
+            if (interactionOrMessage.reply) {
+                interactionOrMessage.followUp(`Here is the trailer: ${trailer}`);
+            } else {
+                interactionOrMessage.channel.send(`Here is the trailer: ${trailer}`);
             }
-       
+        }
     }
 };

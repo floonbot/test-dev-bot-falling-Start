@@ -1,6 +1,12 @@
 const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
+    name: 'emojify',
+    description: 'Transforms text into emojis.',
+    category: 'Fun',
+    dmPermission: false,
+    defaultMemberPermissions: null,
+    nsfw: false,
     data: new SlashCommandBuilder()
         .setName("emojify")
         .setDescription("Transforms text into emojis.")
@@ -13,11 +19,16 @@ module.exports = {
                 .setRequired(true)
         ),
 
-    async run(interaction) {
-        const text = interaction.options.getString("emojify");
+    async run(interactionOrMessage, args) {
+        const text = interactionOrMessage.options ? interactionOrMessage.options.getString("emojify") : args.join(" ");
 
         if (!text) {
-            return interaction.reply({ content: "Please enter valid text!", ephemeral: true });
+            const response = "Please provide text to emojify. Use `.emojify <your text>`.";
+            if (interactionOrMessage.reply) {
+                return interactionOrMessage.reply(response);
+            } else {
+                return interactionOrMessage.channel.send(response);
+            }
         }
 
         const specialCodes = {
@@ -43,6 +54,10 @@ module.exports = {
             return /[a-z]/.test(lowerChar) ? `:regional_indicator_${lowerChar}:` : (specialCodes[lowerChar] || char);
         }).join('');
 
-        interaction.reply(emojifiedText);
+        if (interactionOrMessage.reply) {
+            interactionOrMessage.reply(emojifiedText);
+        } else {
+            interactionOrMessage.channel.send(emojifiedText);
+        }
     }
 };
