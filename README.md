@@ -29,6 +29,7 @@ rajouter le systme de couleurs dans chaque commande est le mettre dans le code
 mieux faire le terminal
 changer les nom de certain dossier et fichier
 Optimiser les commande 
-rajouter des commandes prefix fait juste que art-text
+rajouter des commandes prefix
 À implémenter :
-rajouter des commandes prefix fait juste que art-text
+mettre des embeds 
+mettre des emoji 
