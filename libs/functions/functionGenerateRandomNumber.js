@@ -1,5 +1,5 @@
 function generateRandomNumber() {
-    return Math.floor(Math.random() * 100) + 1;
+  return Math.floor(Math.random() * 100) + 1;
 }
 
-module.exports = { generateRandomNumber};
+module.exports = { generateRandomNumber };

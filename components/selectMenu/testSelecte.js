@@ -1,31 +1,32 @@
-const { ComponentType, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ActionRowBuilder } = require("discord.js");
+const { ComponentType } = require("discord.js");
 
 module.exports = {
+  name: "starter",
+  type: ComponentType.StringSelect,
 
-    name: "starter",
-    type: ComponentType.StringSelect,
-
-    async run(interaction) {
-
-        const select = new StringSelectMenuBuilder()
-            .setCustomId('starter')
-            .setPlaceholder('Make a choice...')
-            .addOptions(
-                new StringSelectMenuOptionBuilder()
-                    .setLabel('Option 1')
-                    .setValue('option1'),
-                new StringSelectMenuOptionBuilder()
-                    .setLabel('Option 2')
-                    .setValue('option2'),
-                new StringSelectMenuOptionBuilder()
-                    .setLabel('Option 3')
-                    .setValue('option3'),
-            );
-
-        const row = new ActionRowBuilder()
-            .addComponents(select);
-
-        await interaction.message.edit({ content: `The option has been chosen!`, Component: [row] });
-        await interaction.deferUpdate();
+  async run(interactionOrMessage) {
+    if (
+      interactionOrMessage.user &&
+      interactionOrMessage.user.id !== process.env.OWNER_ID
+    ) {
+      return interactionOrMessage.reply({
+        content: "You do not have permission to use this command.",
+        ephemeral: true,
+      });
     }
+
+    if (
+      interactionOrMessage.author &&
+      interactionOrMessage.author.id !== process.env.OWNER_ID
+    ) {
+      return interactionOrMessage.channel.send(
+        "You do not have permission to use this command."
+      );
+    }
+
+    await interactionOrMessage.message.edit({
+      content: `<:selecMenu:1266894242475671612>- The option has been chosen!`,
+    });
+    await interactionOrMessage.deferUpdate();
+  },
 };

@@ -175,7 +175,7 @@ module.exports = {
       .setTimestamp();
     interactionOrMessage.client.commands.set(newCommand.data.name, newCommand);
     await interactionOrMessage.reply({
-      embeds: [embedReloadNewCommand]
+      embeds: [embedReloadNewCommand],
     });
   },
 };

@@ -33,3 +33,4 @@ rajouter des commandes prefix
 À implémenter :
 mettre des embeds 
 mettre des emoji 
+quand il a - sur une commande quand il a un nom le bot crash a patch
