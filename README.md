@@ -28,9 +28,10 @@ modifier dans chaque commande qui a une functions les chemins d'acces
 rajouter le systme de couleurs dans chaque commande est le mettre dans le code
 mieux faire le terminal
 changer les nom de certain dossier et fichier
-Optimiser les commande 
+Optimiser les commande
 rajouter des commandes prefix
 À implémenter :
-mettre des embeds 
-mettre des emoji 
+mettre des embeds
+mettre des emoji
 quand il a - sur une commande quand il a un nom le bot crash a patch
+patch snak

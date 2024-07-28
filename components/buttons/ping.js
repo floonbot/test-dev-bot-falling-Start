@@ -43,12 +43,24 @@ module.exports = {
           `
       )
       .setFooter({
-        text: interactionOrMessage.user
-          ? interactionOrMessage.user.tag
-          : interactionOrMessage.author.tag,
-        iconURL: interactionOrMessage.user
-          ? interactionOrMessage.user.avatarURL()
-          : interactionOrMessage.author.avatarURL(),
+        text: `ping by ${
+          interactionOrMessage.user
+            ? interactionOrMessage.user.tag
+            : interactionOrMessage.author.tag
+        }`,
+        iconURL: `${
+          interactionOrMessage.user
+            ? interactionOrMessage.user.displayAvatarURL({
+                dynamic: true,
+                size: 128,
+                format: "png",
+              })
+            : interactionOrMessage.author.displayAvatarURL({
+                dynamic: true,
+                size: 128,
+                format: "png",
+              })
+        }`,
       })
       .setTimestamp();
 

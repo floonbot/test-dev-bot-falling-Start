@@ -59,7 +59,7 @@ module.exports = {
           .toLocaleString("en-US", { timeZone: "UTC" })
           .replace(/[\/:]/g, "-");
         const errorFilePath = resolve(
-          `${errorDir}/messageCreat_error_${currentDate}.txt`
+          `${errorDir}/messageCreate_error_${currentDate}.txt`
         );
 
         await mkdir(errorDir, { recursive: true });

@@ -1,3 +1,3 @@
-const colors = require('./colorsManager');
+const colors = require("./colorsManager");
 
 global.colors = colors;

@@ -23,14 +23,6 @@ module.exports = {
       si.graphics(),
     ]);
 
-    const button = new ButtonBuilder()
-      .setCustomId("refresh-machine-info")
-      .setEmoji("🔁")
-      .setLabel("Refresh")
-      .setStyle(ButtonStyle.Primary);
-
-    const actionRow = new ActionRowBuilder().addComponents(button);
-
     const embed = new EmbedBuilder()
       .setTitle("<:PC:1266899059717832817>- Machine Information")
       .setThumbnail(
@@ -59,18 +51,29 @@ module.exports = {
           `
       )
       .setFooter({
-        text: interactionOrMessage.user
-          ? interactionOrMessage.user.tag
-          : interactionOrMessage.author.tag,
-        iconURL: interactionOrMessage.user
-          ? interactionOrMessage.user.avatarURL()
-          : interactionOrMessage.author.avatarURL(),
+        text: `manchine-info by ${
+          interactionOrMessage.user
+            ? interactionOrMessage.user.tag
+            : interactionOrMessage.author.tag
+        }`,
+        iconURL: `${
+          interactionOrMessage.user
+            ? interactionOrMessage.user.displayAvatarURL({
+                dynamic: true,
+                size: 128,
+                format: "png",
+              })
+            : interactionOrMessage.author.displayAvatarURL({
+                dynamic: true,
+                size: 128,
+                format: "png",
+              })
+        }`,
       })
       .setTimestamp();
 
     await interactionOrMessage.message.edit({
       embeds: [embed],
-      components: [actionRow],
     });
     await interactionOrMessage.deferUpdate();
   },
